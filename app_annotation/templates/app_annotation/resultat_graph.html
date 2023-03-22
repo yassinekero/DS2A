@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {%load static %}
+    {% load mathfilters %}
+    {%load blog_tags%}
+   
+    <link rel="stylesheet" href="{% static 'resultat_corpus.css' %}" type="text/css">
+    
+    <title>Annotation Globale</title>
+</head>
+<body>
+  
+  <div class="global-wrapper">
+    <div class="menu-side">
+      <div class="flex-wrapper">
+          <div class="flex-item">
+            
+          <a  href="{% url 'admin_dashboard' %}"><button  style="background-image: url('{% static 'img/dashboard_grey.png' %}'); margin-top:100px; background-position:15%; margin-right:8px; " class="btn">Dashboard</button></a>
+          </div>
+          <div class="flex-item">
+            <a href={% url 'corpus' %}><button  style="margin-top: 30px; background-image: url('{% static 'img/document.png' %}');padding-right:100px; background-position:18%; margin-right:26px" class="btn">Corpus</button></a>
+            </div>
+            <div class="flex-item">
+              <a href="{% url 'type_annotation' %}"><button  style="background-image: url('{% static 'img/emotions.png' %}');background-position:14%; margin-top: 30px;margin-left:0px; margin-right:0px; padding-right: 40px" class="btn">Type Annotation</button></a>
+              </div>
+              <div class="flex-item">
+                <a href="{% url 'resultat' %}"><button id ="selected"  style="background-image: url('{% static 'img/notepad_blue.png' %}');background-position:17%; margin-right:8px ;margin-top: 30px;">Resultats</button></a>
+                </div>
+                <div class="flex-item">
+                  <a href="{% url 'chercher_tweets' %}"><button style="background-image: url('{% static 'img/twitter_grey.png' %}');background-position:17%; margin-right:19px "class="btn">Tweets</button></a>
+                  </div>
+                <div class="flex-item">
+                  <a href="{% url 'contributeurs' %}"><button style="background-image: url('{% static 'img/profile.png' %}');background-position:14%; margin-left:25px "class="btn">Contributeurs</button></a>
+                  </div>
+                  <div class="flex-item">
+                    <a href="{% url 'logout_admin' %}"><button style="background-image: url('{% static 'img/logout.png' %}');background-position:14%; margin-left:42px; margin-top: 30px"class="btn">Se Deconnecter</button></a>
+                    </div>
+        </div>
+      </div>
+      <div class="content-side">
+        <h1>Résultats</h1>
+     
+        <div class="recent-corpus">
+          <h1 style="font-size: 26px">Graph</h1>
+          <div style="padding-right:12px; padding-left: 12px; width: 97%" class="recent-corpus-block">
+            <div class="graph_switch">
+            <button class="graph_btn pie_btn" onclick="show_pie()">Pie Chart</button>
+            <button class="graph_btn bar_bnt" onclick="show_bar()">Bar Chart</button>
+            </div>
+<div class="pie_ele"style="width: 45%; margin: 0 auto; padding-top: 30px">
+    <canvas id="Pie_Chart" ></canvas>
+  </div>
+  <div class="bar_ele" style="width: 70%; margin: 0 auto; padding-top: 30px; display:none">
+    <canvas id="Bar_Chart" ></canvas>
+  </div>
+  <br>
+  
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+  <script>
+    const ctx = document.getElementById('Pie_Chart');
+    const bar_chart = document.getElementById("Bar_Chart");
+    const pie_btn = document.querySelector(".pie_btn");
+    const bar_btn = document.querySelector(".bar_btn");
+    const pie_ele = document.querySelector(".pie_ele");
+    const bar_ele = document.querySelector(".bar_ele");
+
+
+    function show_bar()
+    {
+    
+      pie_ele.style.display = "none";
+      bar_ele.style.display = "block";
+     
+    };
+    
+    function show_pie()
+    {
+      bar_ele.style.display = "none";
+      pie_ele.style.display = "block";
+    
+    };
+
+    label_db = {{label|safe}}
+    data_pie = {{data_pie|safe}}
+    data_bar = {{data_bar|safe}}
+ 
+  
+    new Chart(ctx, {
+      type: 'pie',
+      data: {
+        labels: label_db,
+        datasets: [{
+          label: '% Sentiment',
+          data: data_pie ,
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+    new Chart(bar_chart, {
+      type: 'bar',
+      data: {
+        labels: label_db,
+        datasets: [{
+          label: 'Nb des Tweets',
+          data: data_bar ,
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+
+
+ 
+    
+  </script>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {%load static %}
+    
+    <title>Afficher Corpus</title>
+</head>
+<body>
+    <div class="tous-corpus">
+        {% for corpus in tous_corpus%}
+        {% if not corpus.masque%}
+          <div class="corpus" style="border:1px solid black; padding:10px; width: fit-content; margin-bottom: 20px">
+           <span> Titre: {{corpus.titre_corpus}} | </span>
+           <span>Nombre des Tweets: {{corpus.tweet_set.all|length}}</span>
+          {% for annot in tous_annot%}
+          {%if annot.corpus.id == corpus.id%}
+           <span>| Déja Annnoté</span>
+           {{ "<!--" }}
+            {%endif%} 
+          {%endfor%}     
+          {{ "<!-- -->" }}
+
+           <a href="{% url 'annoter_corpus' corpus.id %}" class="importer"><button>Annoter</button></a>
+
+          </div>
+          {%endif%}
+          {% endfor %}
+       </div>
+
+</body>
+</html>

@@ -1,0 +1,96 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {%load static %}
+    {%load blog_tags %}
+     {%load mathfilters%}
+    <link rel="stylesheet" href="{% static 'modifier_corpus.css' %}" type="text/css">
+    
+    <title>Modifier Corpus</title>
+</head>
+<body>
+  
+  <div class="global-wrapper">
+    <div class="menu-side">
+      <div class="flex-wrapper">
+          <div class="flex-item">
+            
+          <a  href="{% url 'admin_dashboard' %}"><button  style="background-image: url('{% static 'img/dashboard_grey.png' %}');margin-top:100px; background-position:15%; margin-right:8px; " class="btn">Dashboard</button></a>
+          </div>
+          <div class="flex-item">
+            <a href="{% url 'corpus' %}"><button id ="selected" style="margin-top: 30px; background-image: url('{% static 'img/document_blue.png' %}');padding-right:100px; background-position:18%; margin-right:26px">Corpus</button></a>
+            </div>
+            <div class="flex-item">
+              <a  href="{% url 'type_annotation' %}"><button style="background-image: url('{% static 'img/emotions.png' %}');background-position:14%;  margin-left:0px; margin-right:0px; padding-right: 40px " class="btn">Type Annotation</button></a>
+              </div>
+              <div class="flex-item">
+                <a href="{% url 'resultat' %}"><button style="background-image: url('{% static 'img/notepad.png' %}');background-position:17%; margin-right:8px "class="btn">Resultats</button></a>
+                </div>
+                <div class="flex-item">
+                  <a href="{% url 'chercher_tweets' %}"><button style="background-image: url('{% static 'img/twitter_grey.png' %}');background-position:17%; margin-right:19px "class="btn">Tweets</button></a>
+                  </div>
+                <div class="flex-item">
+                  <a href="{% url 'contributeurs' %}"><button style="background-image: url('{% static 'img/profile.png' %}');background-position:14%; margin-left:25px "class="btn">Contributeurs</button></a>
+                  </div>
+                  <div class="flex-item">
+                    <a href="{% url 'logout_admin' %}"><button style="background-image: url('{% static 'img/logout.png' %}');background-position:14%; margin-left:42px; margin-top: 30px"class="btn">Se Deconnecter</button></a>
+                    </div>
+        </div>
+      </div>
+      <div class="content-side">
+        <h1>Corpus</h1>
+       
+        <h2 style="font-size: 22px; margin-top:27px">Modifier Corpus</h2>
+    
+          
+          <div class="recent-corpus-block">
+            <table>
+              <tr>
+                <td class="table-head" style="padding-left:15px">Corpus ID</td>
+                <td class="table-head">Titre</td>
+                <td class="table-head">Nombre des Tweets</td>
+                <td class="table-head">Type Annotation</td>
+                <td class="table-head">Masqué</td>
+                <td class="table-head">Modifier</td>
+              </tr>
+              {%with limit=tous_corpus|length%}
+              {% for i in 0|range:limit%}
+              {%with  ind=limit|sub:forloop.counter0|sub:1%}
+              {%with corpus=tous_corpus|index:ind%}
+
+              <tr class="rows" style="text-align: center;">
+                <td class="info-rows" style="padding-left: 15px">{{corpus}}</td>
+                <td class="info-rows">{{corpus.titre_corpus}}</td>
+                <td class="info-rows">{{corpus.tweet_set.all|length}}</td>
+                <td class="info-rows">{{corpus.type_annotation}}</td>
+                <td class="info-rows">{% if corpus.masque %} Oui {%else%} Non {%endif%}</td>
+                <td class="info-rows"><a style="color:#295DC0"  href="{% url 'modifier_corpus_id' corpus.id %}">Modifier</a></td>
+              </tr>
+              {%endwith%}
+              {%endwith%}
+              {%endfor%} 
+              {%endwith%}             
+              
+            </table>
+          </div>
+         
+      
+      
+      </div>
+
+    </div>
+ 
+     
+
+  </div>
+
+   <script type="text/javascript" src="{% static 'gerer_corpus/modifier_corpus.js' %}"></script>
+</body>
+
+
+
+

@@ -1,0 +1,226 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap');
+
+body
+{
+    box-sizing: content-box;
+    margin: 0;
+    padding: 0;
+    color: #272343;
+    background-color: #E7ECF4;
+    font-family: poppins, sans-serif;
+   
+}
+
+
+.global-wrapper
+{
+    height: 100%;
+    width: 100vw;
+    
+    display: flex;
+}
+.menu-side
+{
+    height: 100%;
+  width: 16%;
+  background-color: #E7ECF4;
+}
+.content-side
+{
+    height: 100%;
+    width: 82%;
+    background-color: #E7ECF4;
+}
+.flex-wrapper
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+   
+}
+
+.btn
+{
+    padding: 24px 80px 24px 80px;
+    margin-top: 30px;  
+    background-color: transparent;
+    border: none;
+    color: #787986;
+    font-size: 16px;
+    cursor: pointer;
+    
+    background-position:14%;
+    background-size: 28px;
+    background-repeat: no-repeat;
+    transition: all .5s;
+ 
+}
+.btn:hover
+{
+   transform: translateX(20px);
+}
+
+#selected
+{
+    
+    padding: 24px 80px 24px 10px;
+    margin-top: 100px;
+    padding-left: 4vw; 
+    padding-right: 3.6vw;
+    background-color: transparent;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    color: #295DC0; 
+    background-color: #cdd9ec; 
+    border-left: 8px solid #295DC0;
+    background-image: url("img/dashboard.png");
+    background-size: 28px;
+    background-repeat: no-repeat;
+    transition: all .5s;
+   
+}
+
+.content-side h1
+{
+    font-size:40px;
+}
+.content-side .flex-wrapper
+{
+    
+    flex-direction: row;
+    justify-content: start;
+
+}
+
+
+.recent-corpus-block
+
+{
+    background-color: white;
+    position: relative;
+    display: block;
+    height: fit-content;
+    margin-right: 30px;
+    margin-top: 30px;
+
+    border-radius: 25px;
+    box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset, rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+}
+
+
+a
+{
+    text-decoration: none;
+}
+
+form
+{
+    display: block;
+    position: relative;
+    padding-top: 26px;
+    margin-left: 55px;
+    margin-bottom: 20px;
+}
+form .entry
+{
+    font-size: 20px;
+    
+    margin-bottom: 20px;
+    
+}
+.titre, .type-annot, .masque, .file
+{
+    margin-right: 15px;
+}
+
+.fields
+{
+  
+    padding: 5px 10px;
+      
+    margin: 0 auto;
+    width: 250px;
+    font-weight: 500;
+  
+    font-size: 14px;
+    line-height: 22px;
+    letter-spacing: 0.5px;
+    outline: none;
+    color: black;
+    background-color: white;
+    border: 1px solid #DFDEE7;
+    border-bottom: 3px solid #295DC0;
+    font-family: poppins;
+    
+}
+
+.type
+{
+    width: fit-content;
+    height: fit-content;
+}
+.importer
+{
+    margin-top: 50px;
+    display: block;
+    padding: 13px 30px;
+  margin-bottom: 10px;
+    
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 22px;
+    letter-spacing: 0.5px;
+    outline: none;
+    color: white;
+    font-family:Helvetica;
+    background-color:#295DC0;
+    border: 1px solid transparent;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 16px;
+    transition: all .5s;
+}
+.importer:hover
+{
+    
+    color: #295DC0;
+    background-color: white;
+    border: 1px solid #295DC0;
+}
+.last
+{
+    margin-bottom: 50px;
+}
+.tweet_fields
+{
+    width: 1000px;
+    margin-right: 10px;
+}
+.tweets
+{
+   margin-left: 130px;
+}
+
+.add_remove
+{
+    
+    color: white;
+    font-size: 25px;
+    border-radius: 7px;
+    width: 35px;
+    cursor: pointer;
+    color: #295DC0;
+    background-color: white;
+    border: 1px solid #295DC0;
+    transition: .5s;
+}
+.add_remove:hover
+{
+    color: white;
+    background-color: #295DC0;
+    border: 1px solid #295DC0;
+}
+

@@ -1,0 +1,169 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {%load static %}
+    {%load blog_tags %}
+    <link rel="stylesheet" href="{% static 'ajouter_type_annot.css' %}" type="text/css">
+    
+    <title>Modifier Type Annotation</title>
+</head>
+<body>
+
+  <div class="global-wrapper">
+    <div class="menu-side">
+      <div class="flex-wrapper">
+          <div class="flex-item">
+            
+          <a  href="{% url 'admin_dashboard' %}"><button  style="background-image: url('{% static 'img/dashboard_grey.png' %}'); margin-top:100px; background-position:15%; margin-right:8px; " class="btn">Dashboard</button></a>
+          </div>
+          <div class="flex-item">
+            <a href={% url 'corpus' %}><button  style="margin-top: 30px; background-image: url('{% static 'img/document.png' %}');padding-right:100px; background-position:18%; margin-right:26px" class="btn">Corpus</button></a>
+            </div>
+            <div class="flex-item">
+              <a href="{% url 'type_annotation' %}"><button id ="selected" style="background-image: url('{% static 'img/emotions_blue.png' %}');background-position:14%; margin-top: 30px;margin-left:0px; margin-right:0px; padding-right: 40px;">Type Annotation</button></a>
+              </div>
+              <div class="flex-item">
+                <a href="{% url 'resultat' %}"><button style="background-image: url('{% static 'img/notepad.png' %}');background-position:17%; margin-right:8px "class="btn">Resultats</button></a>
+                </div>
+                <div class="flex-item">
+                  <a href="{% url 'chercher_tweets' %}"><button style="background-image: url('{% static 'img/twitter_grey.png' %}');background-position:17%; margin-right:19px "class="btn">Tweets</button></a>
+                  </div>
+                <div class="flex-item">
+                  <a href="{% url 'contributeurs' %}"><button style="background-image: url('{% static 'img/profile.png' %}');background-position:14%; margin-left:25px "class="btn">Contributeurs</button></a>
+                  </div>
+                  <div class="flex-item">
+                    <a href="{% url 'logout_admin' %}"><button style="background-image: url('{% static 'img/logout.png' %}');background-position:14%; margin-left:42px; margin-top: 30px"class="btn">Se Deconnecter</button></a>
+                    </div>
+        </div>
+      </div>
+      <div class="content-side" style="position: relative">
+        <h1>Type Annotation</h1>
+       
+        <h2 style="font-size: 22px; margin-top:27px">Modifier Type Annotation</h2>
+    
+          
+          <div class="recent-corpus-block">
+            <form  action="{% url 'modifier_type_annotation_id' type_annot.id %}" method="post">
+              {% csrf_token %}
+             <div class="entry">
+                <span class="titre">Le nom du Type d'Annotation: </span>
+                <input placeholder="Nom du Type" class="fields"type="text" name="type_annotation" value={{type_annot.nom_type}} required>
+             </div>
+              
+           
+                
+          
+            <div class="entry">
+                <span style="margin-right:10px">Ajouter les Etiquettes: </span>
+                <button type="button" class="plus_btn add_remove" onclick="add()">+</button>
+            </div>
+            <div class="tweets">
+              {%for cat in categories%}
+              {%if forloop.counter0 == 0%}
+              <div id="first"class="entry">
+                {% else %}
+                <div id="{{cat.id}}"class="entry">
+                  {%endif%}
+                  <span>L'Etiquette: </span>
+                  <input type="text" class="fields tweet_fields" name="categorie" value="{{cat.nom_categorie}}"required>
+                  <button id="{{cat.id}}"class="minus_btn add_remove" type="button" onclick="remove(this.id)">-</button>
+                  <br>
+      
+             </div>
+             {%endfor%}
+            
+          </div>
+ 
+       
+
+          <div class="entry last" style="margin-top:20px">
+            <input style="display: inline" class="importer" type="submit" value="Modifier">
+            <a href="{% url 'ajouter_etiquette_contradictoire' type_annot.id %}"><button type="button"style="display: inline; " class="importer">Etiquettes &#8800;</button></a>
+         </div>
+      
+        </form>
+        
+        
+        <form style="display: inline" action="{% url 'supprimer_type_annotation_id' type_annot.id %}" method="post">
+          {% csrf_token %}
+          <button style="top: -55px; left: 285px" class="importer delete">Supprimer</button>
+         
+        </form>
+        
+  
+          
+                       </div>
+               {%if cree%}
+               <div class="notif" style=" position: absolute; display: flex; align-items: center;top: 1.3vh; right: 40%; width: 25%; height: 5vw; background-color: white; border-radius: 8px;box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;z-index: 10;" >
+                
+                   <img src="{% static 'img/checked.png' %}" style="width: 15%; padding-right: 10%; margin-left: 20px">
+                   <span style="width:fit-content; font-size: 1.4vw;">Type Annotation Ajouté</span>
+               </div>
+                </div>
+                {%endif%}
+                
+             
+        </div>
+           
+      
+      
+          </div>
+         
+     
+      </div>
+
+    </div>
+
+     
+  </div>
+
+   <script type="text/javascript" src="{% static 'ajouter_type_annot.js' %}"></script>
+  <script>
+
+    let etiq_contras = document.querySelector(".etiq_contr")
+   let categories_array_id = []
+   let categories_array_nom = []
+
+   let inputs = ""
+
+{%for cat in categories%}
+categories_array_id.push("{{cat.id}}")
+categories_array_nom.push("{{cat.nom_categorie}}")
+{%endfor%}
+
+for(let i =0; i < categories_array_id.length; i++)
+{
+  
+  inputs= inputs + `<option value="${categories_array_id[i]}">${categories_array_nom[i]}</option>`  
+}
+console.log(categories_array_id)
+function add_contra()
+{
+
+let etiq_contra = document.createElement("div")
+etiq_contra.className="entry"
+etiq_contra.innerHTML = `<select class="fields type" name ="etiq_contr"> 
+  ${inputs} 
+</select>
+<span>#</span>
+<select class="fields type" name ="etiq_contr">
+  ${inputs}
+</select>
+`
+ etiq_contras.appendChild(etiq_contra)
+}
+
+
+
+  </script>
+
+</body>
+</html>
+
+

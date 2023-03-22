@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    {%load static %}
+    {%load blog_tags %}
+    {%load mathfilters%}
+   
+    <link rel="stylesheet" href="{% static 'resultat_corpus.css' %}" type="text/css">
+    
+    <title>Mes Annotations</title>
+</head>
+<body>
+  
+  <div class="global-wrapper">
+    <div class="menu-side">
+      <div class="flex-wrapper">
+          <div class="flex-item">
+            
+          <a  href={% url 'contributeur_dashboard' %}><button  style="background-size: 38px;background-image: url('{% static 'img/to-do.png' %}'); background-position:15%; margin-right:35px  ;margin-top:100px; "class="btn" >Corpus</button></a>
+          </div>
+          <div class="flex-item">
+            <a href={% url 'mes_annotations' %}><button id ="selected" style="background-image: url('{% static 'img/criteria.png' %}');background-size: 38px; background-position:13%; margin-right:0px;margin-top: 30px;  padding-right: 23px;" >Mes Annotations</button></a>
+            </div>
+            <div class="flex-item">
+              <a href={% url 'mon_compte' %}><button style="background-image: url('{% static 'img/contr-grey.png' %}');background-position:14%;  margin-left:0px; margin-right:0px; padding-right: 60px " class="btn">Mon Compte</button></a>
+              </div>
+              <div class="flex-item">
+                <a href="{% url 'logout_contri' %}"><button style="background-image: url('{% static 'img/logout.png' %}');background-position:14%; margin-left:42px; margin-top: 30px"class="btn">Se Deconnecter</button></a>
+                </div>
+              
+        </div>
+      </div>
+      <div class="content-side">
+        <h1>Mes Annotations</h1>
+                   
+        <div style="padding-right:12px; padding-left: 12px" class="recent-corpus-block">
+            <div class="titre">{{corpus.titre_corpus}}</div>
+        
+           
+            <table>
+              <tr class="t-head">
+                {%for cat in corpus.type_annotation.categorie_sentiment_set.all%}
+                <td class="table-head" style="padding-left: 10px; padding-right: 10px">{{cat.nom_categorie}}</td>
+                {%endfor%}
+                <td class="table-head">Tweet</td>
+              </tr>
+              {% for tweet in corpus.tweet_set.all%}
+              <tr> 
+             {% for cat in corpus.type_annotation.categorie_sentiment_set.all%}
+               
+              <td class="info-rows">{{list|get_value_from_dict:tweet.id|get_value_from_dict:cat.id}}</td>
+            
+              {%endfor%}
+           
+              <td class="info-rows tweet-row">{{tweet.text}}</td>
+              <tr>
+                 
+          {%endfor%}
+              </table>
+              <br>
+              <br>
+                      </div>
+        </div>
+        <body>
+        </body>
+        </html>

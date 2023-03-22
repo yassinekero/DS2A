@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {%load static %}
+    {%load blog_tags%}
+    {%load mathfilters%}
+    <link rel="stylesheet" href="{% static 'dashboard_admin.css' %}" type="text/css">
+    
+    <title>Admin Dashboard</title>
+</head>
+<body>
+  
+  <div class="global-wrapper">
+    <div class="menu-side">
+      <div class="flex-wrapper">
+          <div class="flex-item">
+            
+          <a  href={% url 'admin_dashboard' %}><button  style=" background-position:15%;padding-right:65px; margin-top:100px; margin-right:8px " id ="selected">Dashboard</button></a>
+          </div>
+          <div class="flex-item">
+            <a href={% url 'corpus' %}><button style="background-image: url('{% static 'img/document.png' %}'); background-position:18%; margin-right:26px " class="btn">Corpus</button></a>
+            </div>
+            <div class="flex-item">
+              <a href="{% url 'type_annotation' %}"><button style="background-image: url('{% static 'img/emotions.png' %}');background-position:14%;  margin-left:0px; margin-right:0px; padding-right: 40px " class="btn">Type Annotation</button></a>
+              </div>
+              <div class="flex-item">
+                <a href="{% url 'resultat' %}"><button style="background-image: url('{% static 'img/notepad.png' %}');background-position:17%; margin-right:8px "class="btn">Resultats</button></a>
+                </div>
+                <div class="flex-item">
+                  <a href="{% url 'chercher_tweets' %}"><button style="background-image: url('{% static 'img/twitter_grey.png' %}');background-position:17%; margin-right:19px "class="btn">Tweets</button></a>
+                  </div>
+                <div class="flex-item">
+                  <a href="{% url 'contributeurs' %}"><button style="background-image: url('{% static 'img/profile.png' %}');background-position:14%; margin-left:25px "class="btn">Contributeurs</button></a>
+                  </div>
+                  <div class="flex-item">
+                    <a href="{% url 'logout_admin' %}"><button style="background-image: url('{% static 'img/logout.png' %}');background-position:14%; margin-left:42px; margin-top: 30px"class="btn">Se Deconnecter</button></a>
+                    </div>
+        </div>
+      </div>
+      <div class="content-side">
+        <h1>Dashboard</h1>
+        <div class="flex-wrapper">
+          <div class="flex-item">
+            <img src="{% static 'img/completed.png' %}">
+            
+            <div class="text1">Corpus Annotés: </div>
+            <span class="text2">{{corpus_annot}}</span>
+          </div>
+          <div class="flex-item">
+            <img src="{% static 'img/calendar.png' %}">
+            
+            <div class="text1">Corpus Non Annotés: </div>
+            <span class="text2">{{corpus_non_annot}}</span>
+            
+          </div>
+          <div class="flex-item">
+            
+            <img src="{% static 'img/contributeurs.png' %}">
+            
+            <div class="text1">Contributeurs: </div>
+            <span class="text2">{{tous_cont}}</span>
+          </div>
+        </div>
+        <div class="recent-corpus">
+          <h1 style="font-size: 26px">Derniers Corpus</h1>
+          <div class="recent-corpus-block" style="overflow: hidden">
+            <table>
+              <tr >
+                <td class="table-head" style="">Corpus ID</td>
+                <td class="table-head">Titre</td>
+                <td class="table-head">Nombre des Tweets</td>
+                <td class="table-head">Type Annotation</td>
+                <td class="table-head">Modifier</td>
+                <td class="table-head">Résultats</td>
+              </tr>
+              {%if tous_corpus|length < 6%}
+              {%with limit=tous_corpus|length%}
+              {% for i in 0|range:limit%}
+              {%with  ind=limit|sub:forloop.counter0|sub:1%}
+              {%with corpus=tous_corpus|index:ind%}
+              <tr class="rows" style="text-align: center;">
+                <td class="info-rows" style="width: fit-content">{{corpus}}</td>
+                <td class="info-rows">{{corpus.titre_corpus}}</td>
+                <td class="info-rows">{{corpus.tweet_set.all|length}}</td>
+                <td class="info-rows">{{corpus.type_annotation}}</td>
+                <td class="info-rows"><a style="color:#295DC0;"  href="{% url 'modifier_corpus_id' corpus.id %}">Modifier</a></td>
+                <td class="info-rows"><a style="color:#295DC0;"  href="{% url 'corpus_resultat' corpus.id %}">Résultats</a></td>
+              </tr>
+              {%endwith%}
+               {% endwith %}
+              {%endfor%}  
+              {%endwith%}  
+              {%else%}   
+              {%with limit=tous_corpus|length%}
+              {% for i in 0|range:5%}
+              {%with  ind=limit|sub:forloop.counter0|sub:1%}
+              {%with corpus=tous_corpus|index:ind%}
+              <tr class="rows" style="text-align: center;">
+                <td class="info-rows" style="width: fit-content">{{corpus}}</td>
+                <td class="info-rows">{{corpus.titre_corpus}}</td>
+                <td class="info-rows">{{corpus.tweet_set.all|length}}</td>
+                <td class="info-rows">{{corpus.type_annotation}}</td>
+                <td class="info-rows"><a style="color:#295DC0;"  href="{% url 'modifier_corpus_id' corpus.id %}">Modifier</a></td>
+                <td class="info-rows"><a style="color:#295DC0;"  href="{% url 'corpus_resultat' corpus.id %}">Résultats</a></td>
+  
+              </tr> 
+              {%endwith%}   
+              {%endwith%}   
+              {%endfor%}
+              {%endwith%}
+              {%endif%}
+            </table>
+          </div>
+        </div>
+        </div>
+       
+      </div>
+
+    </div>
+ 
+     
+
+  </div>
+</body>
+</html>
+
+

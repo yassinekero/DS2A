@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {%load static %}
+    {%load blog_tags%}
+    <link rel="stylesheet" href="{% static 'type_annotation.css' %}" type="text/css">
+    
+    <title>Type Annotation</title>
+</head>
+<body>
+  
+  <div class="global-wrapper">
+    <div class="menu-side">
+      <div class="flex-wrapper">
+          <div class="flex-item">
+            
+          <a  href="{% url 'admin_dashboard' %}"><button  style="background-image: url('{% static 'img/dashboard_grey.png' %}'); margin-top:100px; background-position:15%; margin-right:8px; " class="btn">Dashboard</button></a>
+          </div>
+          <div class="flex-item">
+            <a href={% url 'corpus' %}><button  style="margin-top: 30px; background-image: url('{% static 'img/document.png' %}');padding-right:100px; background-position:18%; margin-right:26px" class="btn">Corpus</button></a>
+            </div>
+            <div class="flex-item">
+              <a href="{% url 'type_annotation' %}"><button id ="selected" style="background-image: url('{% static 'img/emotions_blue.png' %}');background-position:14%; margin-top: 30px;margin-left:0px; margin-right:0px; padding-right: 40px;">Type Annotation</button></a>
+              </div>
+              <div class="flex-item">
+                <a href="{% url 'resultat' %}"><button style="background-image: url('{% static 'img/notepad.png' %}');background-position:17%; margin-right:8px "class="btn">Resultats</button></a>
+                </div>
+                <div class="flex-item">
+                  <a href="{% url 'chercher_tweets' %}"><button style="background-image: url('{% static 'img/twitter_grey.png' %}');background-position:17%; margin-right:19px "class="btn">Tweets</button></a>
+                  </div>
+                <div class="flex-item">
+                  <a href="{% url 'contributeurs' %}"><button style="background-image: url('{% static 'img/profile.png' %}');background-position:14%; margin-left:25px "class="btn">Contributeurs</button></a>
+                  </div>
+                  <div class="flex-item">
+                    <a href="{% url 'logout_admin' %}"><button style="background-image: url('{% static 'img/logout.png' %}');background-position:14%; margin-left:42px; margin-top: 30px"class="btn">Se Deconnecter</button></a>
+                    </div>
+        </div>
+      </div>
+      <div class="content-side">
+        <h1>Type Annotation</h1>
+        <h2>Ajouter Type Annotation</h2>
+        <div class="flex-wrapper">
+          <div class="flex-item">
+      
+            <div class="text">Ajouter Type Annotation</div>
+            <a  href="{% url 'ajouter_type_annotation' %}"><button class="plus">+ Créer Type</button></a>
+        
+          </div>
+          <div class="flex-item">
+            <div class="text">Ajouter Etiquette</div>
+            <a  href="{% url 'ajouter_etiquette' %}"><button class="plus">+ Créer Etiquette</button></a>
+          </div>
+         
+        </div>
+        <div class="recent-corpus">
+          <h1 style="font-size: 26px">Modifier Type Annotation</h1>
+          <div class="recent-corpus-block">
+            <table>
+              <tr >
+                <td class="table-head" style="padding-left:105px">Nom du Type</td>
+                <td class="table-head">Nombre des Etiquettes</td>
+                <td class="table-head">Nombre des Corpus</td>
+                <td class="table-head">Modifier</td>
+              </tr>
+              {%if tous_type|length < 6%}
+              {%with limit=tous_type|length%}
+              {% for i in 0|range:limit%}
+              {%with type=tous_type|index:forloop.counter0%}
+              <tr class="rows" style="text-align: center;">
+                <td class="info-rows" style="padding-left:105px">{{type.nom_type}}</td>
+                <td class="info-rows">{{type.categorie_sentiment_set.all|length}}</td>
+                <td class="info-rows">{{type.corpus_set.all|length}}</td>
+                <td class="info-rows"><a style="color:#295DC0"  href="{% url 'modifier_type_annotation_id' type.id %}">Modifier</a></td>
+              </tr>
+               {% endwith %}
+              {%endfor%}  
+              {%endwith%}  
+              {%else%}   
+              {% for i in 0|range:5%}
+              {%with type=tous_type|index:forloop.counter0%}
+              <tr class="rows" style="text-align: center;">
+                <td class="info-rows" style="padding-left:105px">{{type.nom_type}}</td>
+                <td class="info-rows">{{type.categorie_sentiment_set.all|length}}</td>
+                <td class="info-rows">{{type.corpus_set.all|length}}</td>
+                <td class="info-rows"><a style="color:#295DC0"  href="{% url 'modifier_type_annotation_id' type.id %}">Modifier</a></td>
+              </tr>
+                 
+              {%endwith%}   
+              {%endfor%}
+              {%endif%}
+            </table>
+          </div>
+          <a href="{% url 'modifier_type_annotation'%}"><button class="voire-tous">Voire tous</button></a>
+         
+        </div>
+        </div>
+        
+      </div>
+
+    </div>
+ 
+     
+
+  </div>
+</body>

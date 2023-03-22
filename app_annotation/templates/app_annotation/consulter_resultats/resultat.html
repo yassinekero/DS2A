@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {%load static %}
+    {% load mathfilters %}
+    {% load blog_tags %}
+    <link rel="stylesheet" href="{% static 'resultat_tous_corpus.css' %}" type="text/css">
+    
+    <title>Resultats</title>
+</head>
+<body>
+  
+  <div class="global-wrapper">
+    <div class="menu-side">
+      <div class="flex-wrapper">
+          <div class="flex-item">
+            
+          <a  href="{% url 'admin_dashboard' %}"><button  style="background-image: url('{% static 'img/dashboard_grey.png' %}'); margin-top:100px; background-position:15%; margin-right:8px; " class="btn">Dashboard</button></a>
+          </div>
+          <div class="flex-item">
+            <a href={% url 'corpus' %}><button  style="margin-top: 30px; background-image: url('{% static 'img/document.png' %}');padding-right:100px; background-position:18%; margin-right:26px" class="btn">Corpus</button></a>
+            </div>
+            <div class="flex-item">
+              <a href="{% url 'type_annotation' %}"><button  style="background-image: url('{% static 'img/emotions.png' %}');background-position:14%; margin-top: 30px;margin-left:0px; margin-right:0px; padding-right: 40px" class="btn">Type Annotation</button></a>
+              </div>
+              <div class="flex-item">
+                <a href="{% url 'resultat' %}"><button id ="selected"  style="background-image: url('{% static 'img/notepad_blue.png' %}');background-position:17%; margin-right:8px ;margin-top: 30px;">Resultats</button></a>
+                </div>
+                <div class="flex-item">
+                  <a href="{% url 'chercher_tweets' %}"><button style="background-image: url('{% static 'img/twitter_grey.png' %}');background-position:17%; margin-right:19px "class="btn">Tweets</button></a>
+                  </div>
+                <div class="flex-item">
+                  <a href="{% url 'contributeurs' %}"><button style="background-image: url('{% static 'img/profile.png' %}');background-position:14%; margin-left:25px "class="btn">Contributeurs</button></a>
+                  </div>
+                  <div class="flex-item">
+                    <a href="{% url 'logout_admin' %}"><button style="background-image: url('{% static 'img/logout.png' %}');background-position:14%; margin-left:42px; margin-top: 30px"class="btn">Se Deconnecter</button></a>
+                    </div>
+        </div>
+      </div>
+      <div class="content-side">
+        <h1>Résultats</h1>
+     
+        <div class="recent-corpus">
+          <h1 style="font-size: 26px">Tous les Corpus</h1>
+          <div class="recent-corpus-block">
+            <table>
+              <tr >
+                <td class="table-head"  style="width: fit-content">Corpus ID</td>
+                <td class="table-head">Titre</td>
+                <td class="table-head">Nombre des Tweets</td>
+                <td class="table-head">Nombre des Contributions</td>
+    
+                <td class="table-head">Résultats</td>
+              </tr>
+              {%with limit=tous_corpus|length%}
+              {% for i in 0|range:limit%}
+              {%with  ind=limit|sub:forloop.counter0|sub:1%}
+              {%with corpus=tous_corpus|index:ind%}
+
+              <tr class="rows" style="text-align: center;">
+                <td class="info-rows"  style="width: fit-content">{{corpus}}</td>
+                <td class="info-rows">{{corpus.titre_corpus}}</td>
+                <td class="info-rows">{{corpus.tweet_set.all|length}}</td>
+                <td class="info-rows">{{list|index:ind}}</td>
+              
+                <td class="info-rows"><a style="color:#295DC0"  href="{% url 'corpus_resultat' corpus.id %}">Résultats</a></td>
+              </tr>
+             {%endwith%}
+             {%endwith%}
+              {%endfor%}   
+              {%endwith%}           
+              
+            </table>
+            <br>
+          </div>
+        </div>
+        </div>
+      
+      </div>
+
+    </div>
+ 
+     
+
+  </div>
+</body>

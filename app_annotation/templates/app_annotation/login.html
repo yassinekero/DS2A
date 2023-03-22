@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {%load static %}
+    <link rel="stylesheet" href="{% static 'login.css' %}" type="text/css">
+    
+    <title>Login</title>
+</head>
+<body>
+  
+    <div class="wrapper">
+        <div class="vis-side">
+          <div class="slide-1 slides">
+            <div class="images">
+            
+            <img style="margin-top: 0px; border-radius: 10px"class="img img-1" src="{% static 'img/login_img_canva.png' %}" alt="">
+          
+        
+            </div>
+            <div class="text-vis">
+            <div class="txt-1">DARIJA SENTIMENT ANALYSIS <br>ANNOTATOR</div>        
+            <div class="txt-2">Contribuez en annotant des textes écrits en Darija <br>par votre sentiments</div>
+            </div>
+          </div>
+        </div>
+        <form  {% if user_exist %} style="display: none" {% endif %} class="login-side" action="{% url 'authenticate' %}" method="post">
+          {% csrf_token %}
+        <div class="login-side-content">
+      
+          <img style="width: 150px; display: block; margin: 0 auto; margin-top:80px" src="{% static 'img/DS2A_logo.png' %}" alt="">
+          <br>
+          <h2>Bonjour!</h2>
+          <p>Entrez votre informations pour s'authentifier</p>
+          {% if signup_success %}
+          <div class="msg created-msg">Votre compte a été créé</div>
+          {% endif %}
+          {% if user_not_found %}
+          <div class="msg already_user-msg">Compte introuvable</div>
+          {% endif %}
+          {% if wrong_password %}
+          <div class="msg already_user-msg">Mot de Passe incorrect</div>
+          {% endif %}
+          {% if account_blocked%}
+          <div class="msg already_user-msg">Compte Bloqué</div>
+          {% endif %}
+        <input class="fields email" maxlength="100" type="text"  name="logusername" placeholder="Username" id="logemail" required>     
+          <input class="fields password" maxlength="100" type="password" name="logpassword"  placeholder="Password" id="logpassword" required>
+          <input class="submit_btn" type="submit" name="login"  value="S'authentifier" id="submit_btn">
+          <div class="sign-up" {% if signup_success or user_not_found or wrong_password%} style="margin-top: 10%;" {% endif%}>
+            <p>Nouveau contributeur? <span class="signup_btn">Créer un compte </span></p>
+          </div>
+        </div>
+      </form>
+      <form {% if user_exist %} style="display: block;" {% endif %} class="signup-side" action="{% url 'register' %}" method="post">
+        {% csrf_token %}
+        <div class="signup-side-content">
+          <img style="width: 150px; display: block; margin: 0 auto; margin-top:80px" src="{% static 'img/DS2A_logo.png' %}" alt="">
+          <br>
+          <h2>Creer Un Compte</h2>
+          <p>Creez un nouveau compte pour commencer</p>
+          {% if user_exist%}
+          <div class="msg already_user-msg">Ce nom d'utilisateur existe déjà</div>
+          {% endif %}
+          <input class="fields info" maxlength="100" type="text" name="lognom" placeholder="Nom" id="logemail" required>
+          <input class="fields info" maxlength="100" type="text" name="logprenom" placeholder="Prenom" id="logemail" required>
+        <input class="fields email" maxlength="100" type="text" name="logusername" placeholder="Username" pattern="[^' ']+" id="logusername" required>  
+          <input class="fields password" maxlength="100" type="password" name="logpassword"  placeholder="Password" id="logpassword" pattern="[^' ']+" minlength="8"required>
+          <input class="submit_btn" type="submit" name="login"  value="Créer Compte" id="submit_btn">
+          <div class="log-in" {% if user_exist %} style="margin-top: %;" {% endif%}>
+            <p>Déja inscrit? <span class="login_btn">S'authentifier</span></p>
+          </div>
+        </div>
+      </form>
+    </div>
+  
+     <script type="text/javascript" src="{% static 'login.js' %}"></script>
+    
+</body>
+</html>

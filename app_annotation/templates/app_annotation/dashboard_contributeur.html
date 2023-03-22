@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    {%load static %}
+    {%load blog_tags %}
+    {%load mathfilters%}
+    <link rel="stylesheet" href="{% static 'corpus_disp.css' %}" type="text/css">
+    
+    <title>Corpus Disponnibles</title>
+
+</head>
+
+<body>
+  
+  <div class="global-wrapper">
+    <div class="menu-side">
+      <div class="flex-wrapper">
+          <div class="flex-item">
+            
+          <a  href={% url 'contributeur_dashboard' %}><button  style="background-size: 38px;background-image: url('{% static 'img/to-do_blue.png' %}'); background-position:15%; margin-right:8px " id ="selected"><span>Corpus</span></button></a>
+          </div>
+          <div class="flex-item">
+            <a href={% url 'mes_annotations' %}><button style="background-image: url('{% static 'img/criteria_grey.png' %}'); background-size: 38px; background-position:13%; margin-right:26px;  padding-right: 23px;" class="btn"><span>Mes Annotations</span></button></a>
+            </div>
+            <div class="flex-item">
+              <a href={% url 'mon_compte' %}><button style="background-image: url('{% static 'img/contr-grey.png' %}');background-position:14%;  margin-left:0px; margin-right:0px; padding-right: 60px " class="btn"><span>Mon Compte</span></button></a>
+              </div>
+              <div class="flex-item">
+                <a href="{% url 'logout_contri' %}"><button style="background-image: url('{% static 'img/logout.png' %}');background-position:14%; margin-left:42px; margin-top: 30px"class="btn"><span>Se Deconnecter</span></button></a>
+                </div>
+              
+        </div>
+      </div>
+      <div class="content-side">
+        <h1>Corpus à Annoter</h1>
+        <div class="flex-wrapper">
+          {%with limit=tous_corpus|length%}
+          {% for i in 0|range:limit%}
+          {%with  ind=limit|sub:forloop.counter0|sub:1%}
+          {%with corpus=tous_corpus|index:ind%}
+          {% if not corpus.masque%}
+          <div class="flex-item" style="height: fit-content">
+            <div class="left-side">
+              <div class="text">
+              <div class="text1">Corpus: </div>
+              <div class="text2">&#9679; {{corpus.titre_corpus}}</div>
+              <div class="text1">Nombre des Tweets: {{corpus.tweet_set.all|length}}</div>
+              <br>
+              <br>
+              </div>
+            </div>
+            <div class="right-side">
+              <div class="text">
+                <div class="text2">Description: </div>
+                <div class="text1"><span style="color: #295DC0">&#9679;</span> Anonoter les Tweets par les Etiquettes: <br>{%for cat in corpus.type_annotation.categorie_sentiment_set.all%}&#9675; {{cat.nom_categorie}} {%endfor%}</div>
+                
+                </div>
+                <div class="progres"><span style="color: #295DC0">{{list|index:ind}}/ {{corpus.tweet_set.all|length}}</span> Tweets Annotés</div>
+                <a style="text-decoration: none;"class="annoter_a"href="{% url 'annoter_corpus' corpus.id %}"><button class="importer">Annoter</button></a>
+                
+            </div>
+            
+          </div>
+          
+          {%endif%}
+          {%endwith%}
+          {%endwith%}
+          {% endfor %}
+          {%endwith%}
+            
+        </div>
+       
+        </div>
+       
+      </div>
+
+    </div>
+ 
+     
+
+  </div>
+</body>
+</html>
+<!--
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {%load static %}
+    <link rel="stylesheet" href="{% static 'dashboard_admin.css' %}" type="text/css">
+    
+    <title>Contributeur Dashboard</title>
+</head>
+<body>
+  
+<h1>Contributeur</h1>
+
+<div>Login : {{compte.login}}</div>
+<div>Nom: {{compte.nom}}</div>
+<div>Prenom: {{compte.prenom}}</div>
+<br>
+<span>Afficher les Corpus Disponnibles</span>
+<a href="{% url 'afficher_corpus_contr' %}"><button>Ouvrir</button></a>
+ <br>
+<form action="{% url 'logout_contri' %}" method="post">
+{% csrf_token %}
+<button>Se Déconnecter</button>
+</form>
+
+</body>
+</html>
+
+-->

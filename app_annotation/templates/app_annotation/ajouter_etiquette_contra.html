@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {%load static %}
+    {%load blog_tags %}
+    <link rel="stylesheet" href="{% static 'ajouter_type_annot.css' %}" type="text/css">
+    
+    <title>Etiquettes Contradictoires</title>
+</head>
+<body>
+
+  <div class="global-wrapper">
+    <div class="menu-side">
+      <div class="flex-wrapper">
+          <div class="flex-item">
+            
+          <a  href="{% url 'admin_dashboard' %}"><button  style="background-image: url('{% static 'img/dashboard_grey.png' %}'); margin-top:100px; background-position:15%; margin-right:8px; " class="btn">Dashboard</button></a>
+          </div>
+          <div class="flex-item">
+            <a href={% url 'corpus' %}><button  style="margin-top: 30px; background-image: url('{% static 'img/document.png' %}');padding-right:100px; background-position:18%; margin-right:26px" class="btn">Corpus</button></a>
+            </div>
+            <div class="flex-item">
+              <a href="{% url 'type_annotation' %}"><button id ="selected" style="background-image: url('{% static 'img/emotions_blue.png' %}');background-position:14%; margin-top: 30px;margin-left:0px; margin-right:0px; padding-right: 40px;">Type Annotation</button></a>
+              </div>
+              <div class="flex-item">
+                <a href="{% url 'resultat' %}"><button style="background-image: url('{% static 'img/notepad.png' %}');background-position:17%; margin-right:8px "class="btn">Resultats</button></a>
+                </div>
+                <div class="flex-item">
+                  <a href="{% url 'chercher_tweets' %}"><button style="background-image: url('{% static 'img/twitter_grey.png' %}');background-position:17%; margin-right:19px "class="btn">Tweets</button></a>
+                  </div>
+                <div class="flex-item">
+                  <a href="{% url 'contributeurs' %}"><button style="background-image: url('{% static 'img/profile.png' %}');background-position:14%; margin-left:25px "class="btn">Contributeurs</button></a>
+                  </div>
+                  <div class="flex-item">
+                    <a href="{% url 'logout_admin' %}"><button style="background-image: url('{% static 'img/logout.png' %}');background-position:14%; margin-left:42px; margin-top: 30px"class="btn">Se Deconnecter</button></a>
+                    </div>
+        </div>
+      </div>
+      <div class="content-side" style="position: relative">
+        <h1>Type Annotation</h1>
+       
+        <h2 style="font-size: 22px; margin-top:27px">Etiquettes Contradictoires</h2>
+    
+          
+          <div class="recent-corpus-block">
+            <form  action="{% url 'ajouter_etiquette_contradictoire' type_id %}" method="post">
+              {% csrf_token %}
+
+          <div class="entry">
+            <span style="margin-right:10px">Ajouter les Etiquettes Contradictoires: </span>
+            <button type="button" class="plus_btn add_remove" onclick="add_contra()">+</button>
+        </div>
+       
+        <div class="etiq_contr">
+          {%for contra in etiq_contradictoire%}
+          <div id="{{contra.id}}" class="entry">
+          
+          <select class="fields type" name ="etiq_contr"> 
+            {%for cat in categories%}
+            <option value="{{cat.id}}" {%if cat.id == contra.cat1.id%} selected {%endif%}>{{cat.nom_categorie}}</option>
+            {%endfor%}
+          </select>
+          <span>&#8800;</span>
+          <select class="fields type" name ="etiq_contr"> 
+            {%for cat in categories%}
+            <option value="{{cat.id}}" {%if cat.id == contra.cat2.id%} selected {%endif%}>{{cat.nom_categorie}}</option>
+            {%endfor%}
+          </select>
+          <button id="{{contra.id}}"class="minus_btn add_remove" type="button" onclick="remove(this.id)">-</button>
+           
+
+        </div>
+        {%endfor%}
+    </div>
+          <div class="entry last" style="margin-top:20px">
+            <input class="importer" type="submit" value="Modifier">
+         </div>
+    <br>
+        </form>
+               </div>
+               {%if cree%}
+               <div class="notif" style=" position: absolute; display: flex; align-items: center;top: 1.3vh; right: 40%; width: 25%; height: 5vw; background-color: white; border-radius: 8px;box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;z-index: 10;" >
+                
+                   <img src="{% static 'img/checked.png' %}" style="width: 15%; padding-right: 10%; margin-left: 20px">
+                   <span style="width:fit-content; font-size: 1.4vw;">Type Annotation Ajouté</span>
+               </div>
+                </div>
+                {%endif%}
+                
+             
+        </div>
+           
+      
+      
+          </div>
+         
+     
+      </div>
+
+    </div>
+
+     
+  </div>
+
+   <script type="text/javascript" src="{% static 'ajouter_type_annot.js' %}"></script>
+  <script>
+
+    let etiq_contras = document.querySelector(".etiq_contr")
+   let categories_array_id = []
+   let categories_array_nom = []
+
+   let inputs = ""
+
+{%for cat in categories%}
+categories_array_id.push("{{cat.id}}")
+categories_array_nom.push("{{cat.nom_categorie}}")
+{%endfor%}
+
+for(let i =0; i < categories_array_id.length; i++)
+{
+  
+  inputs= inputs + `<option value="${categories_array_id[i]}">${categories_array_nom[i]}</option>`  
+}
+console.log(categories_array_id)
+function add_contra()
+{
+  let id = makeid(15)
+let etiq_contra = document.createElement("div")
+etiq_contra.className="entry"
+etiq_contra.id =id
+etiq_contra.innerHTML = `<select class="fields type" name ="etiq_contr"> 
+  ${inputs} 
+</select>
+<span>&#8800;</span>
+<select class="fields type" name ="etiq_contr">
+  ${inputs}
+</select>
+<button id="${id}"class="minus_btn add_remove" type="button" onclick="remove(this.id)">-</button>
+`
+ etiq_contras.appendChild(etiq_contra)
+}
+
+function remove(id)
+{
+     let etiq_contr = document.getElementById(id)
+     etiq_contras.removeChild(etiq_contr)
+}
+
+
+function makeid(length) {
+  let result = '';
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  const charactersLength = characters.length;
+  let counter = 0;
+  while (counter < length) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    counter += 1;
+  }
+  return result;
+}
+
+
+
+  </script>
+
+</body>
+</html>
+
+

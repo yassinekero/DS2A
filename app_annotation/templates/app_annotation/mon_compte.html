@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    {%load static %}
+    {%load blog_tags %}
+    {%load mathfilters%}
+    <link rel="stylesheet" href="{% static 'mon_compte.css' %}" type="text/css">
+    
+    <title>Mon Compte</title>
+</head>
+<body>
+  
+  <div class="global-wrapper">
+    <div class="menu-side">
+      <div class="flex-wrapper">
+          <div class="flex-item">
+            
+          <a  href={% url 'contributeur_dashboard' %}><button  style="background-size: 38px;background-image: url('{% static 'img/to-do.png' %}'); background-position:15%; margin-right:35px ; margin-top: 100px" class="btn">Corpus</button></a>
+          </div>
+          <div class="flex-item">
+            <a href={% url 'mes_annotations' %}><button style="background-image: url('{% static 'img/criteria_grey.png' %}'); background-size: 38px; background-position:13%; margin-right:26px;  padding-right: 23px;" class="btn">Mes Annotations</button></a>
+            </div>
+            <div class="flex-item">
+              <a href="{% url 'mon_compte' %}"><button style="background-image: url('{% static 'img/contr-blue.png' %}');background-position:14%;  margin-left:0px; margin-right:0px; padding-right: 40px; margin-top: 30px" id ="selected">Mon Compte</button></a>
+              </div>
+              <div class="flex-item">
+                <a href="{% url 'logout_contri' %}"><button style="background-image: url('{% static 'img/logout.png' %}');background-position:14%; margin-left:42px; margin-top: 30px"class="btn">Se Deconnecter</button></a>
+                </div>
+              
+        </div>
+      </div>
+      <div class="content-side" style="position: relative">
+        <h1>Mon Compte</h1>
+        <div class="recent-corpus">
+            
+            <div class="recent-corpus-block" style="width: 70%; margin: 0 auto">
+                <form action="{% url 'mon_compte' %}" method="post">
+                    {% csrf_token %}
+              <div class="entry">
+                <img src="{% static 'img/profile-user.png' %}" style="width: 170px; margin-bottom:20px; margin:0 auto; padding-top:20px; display: block">
+              </div>
+              <div class="entry" >
+                  <span class="titre" style="font-size: 30px; text-align:center"> {{contr.nom}} {{contr.prenom}}</span>
+              </div>
+              <div class="entry" style=" margin-bottom: 5px; margin-left:35%" >
+                  <span style="font-size: 25px;"><span style="color: #295DC0;" >&#9679; </span>Username: </span>
+                  <br>
+                  <input class="fields type" placeholder="Username" name="login" value="{{contr.login}}" style="font-size: 18px; margin-left:10px; width: 40%" readonly required> 
+              </div>
+              <div class="entry" style=" margin-bottom: 5px; margin-left:35%;" >
+                <span style="font-size: 25px;"><span style="color: #295DC0;">&#9679; </span>Prenom: </span>
+                <br>
+                <input class="fields type" placeholder="Prenom" name="prenom"value="{{contr.prenom}}"style="font-size: 18px; margin-left:10px; width: 40%" required> 
+            </div>
+            <div class="entry" style=" margin-bottom: 5px;margin-left:35%" >
+                <span style="font-size: 25px; "><span style="color: #295DC0;">&#9679; </span>Nom: </span>
+                <br>
+                <input class="fields type"  placeholder="Nom" name="nom" value="{{contr.nom}}"style="font-size: 18px; margin-left:10px; width: 40%" required> 
+            </div>
+            <div class="entry" style=" margin-bottom: 5px; margin-left:35%" >
+              <span  style="font-size: 25px;"><span style="color: #295DC0;">&#9679; </span>Téléphone: </span>
+              <br>
+              <input class="fields type" type="number" placeholder="Téléphone" name="tele" value={%if contr.tele %}{{contr.tele}}{%else%}""{%endif%} style="font-size: 18px;margin-left:10px; width: 40%"> 
+             
+            </div>
+              <div class="entry" style=" margin-bottom: 5px; margin-left:35%" >
+                <span  style="font-size: 25px;"><span style="color: #295DC0;">&#9679; </span>Email: </span>
+                <br>
+                <input class="fields type" type="email" placeholder="Email" name="email" value="{% if contr.email %}{{contr.email}}{%else%}{%endif%}"style="font-size: 18px;margin-left:10px; width: 40%"> 
+               
+              </div>
+                <div class="entry" style=" margin-bottom: 5px;margin-left:35%" >
+                <span  style="font-size: 25px; "><span style="color: #295DC0;">&#9679; </span>Profession: </span>
+                <br>
+                <input class="fields type" type="text" placeholder="Profession" name="profession"value="{% if contr.profession %}{{contr.profession}}{%else%}{%endif%}"style="font-size: 18px; margin-left:10px; width: 40%"> 
+                
+                </div>
+                
+                    <input class="importer delete" style="margin: 0 auto;margin-top: 20px; display: block;" type="submit" value="Modifier">
+                </form>
+              <br>
+              
+            </div>
+            {%if cree%}
+            <div class="notif" style=" position: absolute; display: flex; align-items: center;top: 1.3vh; right: 40%; width: 25%; height: 5vw; background-color: white; border-radius: 8px;box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;z-index: 10;" >
+             
+                <img src="{% static 'img/checked.png' %}" style="width: 15%; padding-right: 10%; margin-left: 20px">
+                <span style="width:fit-content; font-size: 1.4vw; ">Compte Modifié</span>
+            </div>
+             </div>
+             {%endif%}
+            
+                  
+               </div>
+  
+  
+            </div>
+          </div>
+       
+        </div>
+       
+      </div>
+
+    </div>
+ 
+     
+
+  </div>
+</body>
+</html>

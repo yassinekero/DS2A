@@ -1,0 +1,289 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap');
+
+
+body
+{
+    box-sizing: content-box;
+    margin: 0;
+    padding: 0;
+    color: #272343;
+    background-color: #E7ECF4;
+
+   
+}
+
+.wrapper
+{
+
+    width:1200px;
+ 
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+    margin-top: 5%;
+    border-radius: 20px 20px 20px 20px;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 15px 25px, rgba(0, 0, 0, 0.05) 0px 5px 10px;
+   
+    
+}
+.vis-side 
+{
+    width: 50%;
+    height: 840px;
+    background-color:#295DC0;
+    border-radius: 20px 0px 0px 20px;
+    
+    
+}
+.login-side, .signup-side
+{
+    width: 50%;
+    height: 840px;
+    background-color:white;  
+    border-radius: 0px 20px 20px 0px;
+    
+   
+}
+.login-side h2, .signup-side h2
+{
+    margin: 0 auto;
+ 
+    width: fit-content;
+    font-family:  Helvetica;
+    color: #272343;
+    font-size: 35px;
+}
+.login-side p, .signup-side p
+{
+    width: 70%;
+    text-align: center;
+    margin: 0 auto;
+    margin-bottom: 5%;
+    margin-top: 25px;
+    color: #B0B3C4;
+    font-family:'Courier New';
+}
+.fields {
+    display: block;
+    padding: 13px 20px;
+    height: 20px;   
+    margin: 0 auto;
+    width: 60%;
+    font-weight: 500;
+    border-radius: 8px;
+    font-size: 14px;
+    line-height: 22px;
+    letter-spacing: 0.5px;
+    outline: none;
+    color: #B0B3C4;
+    background-color: #F8FBFC;
+    border: 1px solid #DFDEE7;
+    margin-bottom: 25px;
+    font-family:'Courier New';
+    transition: all .5s ;
+}
+.fields:hover, .fields:focus
+{
+    border-color:  #295DC0;
+    background-color: white;
+    color: #272343; 
+}
+.email
+{
+    
+    background-image: url("img/user-grey.png");
+    background-position:95%;
+    background-size: 27px;
+    background-repeat: no-repeat;
+    transition: all .5s;
+   
+    
+}
+.email:hover, .email:focus
+{
+    background-image: url("img/user-blue.png")
+}
+.password
+{
+    background-image: url("img/lock_grey.png");
+    background-position:95%;
+    background-size: 27px;
+    background-repeat: no-repeat;
+    transition: all .5s;
+}
+.password:hover, .password:focus
+{
+    background-image: url("img/lock_blue.png")
+}
+.submit_btn
+{
+    display: block;
+    padding: 13px 20px;
+    height: 50px;   
+    margin: 0 auto;
+    width: 67%;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 22px;
+    letter-spacing: 0.5px;
+    outline: none;
+    color: white;
+    font-family:Helvetica;
+    background-color:#295DC0;
+    border: 0;
+    margin-top: 13%;
+    
+    font-weight: 500;
+    font-size: 16px;
+    transition: all .5s;
+}
+.submit_btn:hover
+{
+    cursor: pointer;
+    color: #295DC0;
+    background-color: white;
+    border: 1px solid #295DC0;
+}
+.sign-up 
+{
+    margin-top: 23%;
+    margin-bottom: 0;
+}
+.log-in
+{
+    margin-top: 7%;
+    margin-bottom: 0;
+}
+.signup_btn
+{
+    text-decoration: none;
+    cursor : pointer;
+    color: #295DC0;
+    
+}
+.login_btn
+{
+    text-decoration: none;
+    cursor : pointer;
+    color: #295DC0;
+}
+
+.signup-side
+{
+    display: none; 
+}
+.signup-side h2
+{
+
+
+    
+}
+.signup-side .submit_btn
+{
+    margin-top: 8%;
+}
+.info
+{
+    
+    background-image: url("img/id-card\ -grey.png");
+    background-position:95%;
+    background-size: 27px;
+    background-repeat: no-repeat;
+    transition: all .5s;
+   
+    
+}
+.info:hover, .info:focus
+{
+    background-image: url("img/id-card-blue.png")
+}
+
+.msg
+{
+    margin: 0 auto;
+    margin-top: 1%;
+    margin-bottom: 30px;
+    width: fit-content;
+    font-family:'Courier New';
+    font-size: 17px;
+    padding: 15px;
+    padding-left: 45px;
+    padding-right: 70px;
+    border-radius: 4px;
+    background-position:2%;
+    background-size: 27px;
+    background-repeat: no-repeat;
+   
+}
+.created-msg
+{
+    color: #23AD60;
+    background-color: #E5FBEE;
+    border-left: 10px solid #2cd772;
+    background-image: url("img/correct.png");
+}
+.already_user-msg
+{
+    color: #FF4656;
+    background-color: #FFE1E3;
+    border-left: 10px solid #FF4656;
+    background-image: url("img/cross.png");
+}
+.slide-1
+{
+    height: inherit;
+   
+}
+.images
+{
+    display: block;
+    margin: 0 auto;
+    width: fit-content;
+    margin-top: 10%;
+}
+.img-1
+{
+    width: 550px;
+    display: block;
+    margin: 0 auto;
+  
+}
+
+
+.text-vis
+{
+    margin: 0 auto;
+    margin-top: 17%;
+    
+    width: fit-content;
+   
+}
+.txt-1
+{
+
+    color: white;
+    
+    
+    font-family:poppins;
+    font-size: 27px;
+    text-align: center;
+    font-weight:900;
+    margin-bottom: 20px;
+}
+.txt-2
+{
+    
+    color: white;
+
+    text-align:center;
+    font-family:poppins;
+    font-size: 14px;
+   
+}
+.slide-2
+{
+   
+    height: inherit; 
+    display: none;
+}

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {%load static %}
+    
+    <title>Afficher Contributeur</title>
+</head>
+<body>
+    <div class="tous-corpus">
+    {% for contr in tous_contr%}
+    <div class="contr" style="border:1px solid black; padding:10px; width: fit-content; margin-bottom: 20px">
+        <span> Login: {{contr.login.login}} | </span>
+        <span> Prenom: {{contr.nom}} | </span>
+        <span> Nom: {{contr.prenom}} | </span>
+        <a href="{% url 'gerer_contr' contr.login.login %}"><button>Gerer</button></a>
+    </div>
+    {%endfor%}
+
+
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    {%load static %}
+    <link rel="stylesheet" href="{% static 'annoter_corpus.css' %}" type="text/css">
+    
+    <title>Annoter Corpus</title>
+</head>
+<body>
+   
+  <div class="global-wrapper">
+    <div class="menu-side">
+        <div class="flex-wrapper">
+            <div class="flex-item">
+              
+            <a  href={% url 'contributeur_dashboard' %}><button  style="background-size: 38px;background-image: url('{% static 'img/to-do_blue.png' %}'); background-position:15%;margin-top:100px; margin-right:8px " id ="selected">Corpus</button></a>
+            </div>
+            <div class="flex-item">
+              <a href={% url 'mes_annotations' %}><button style="background-image: url('{% static 'img/criteria_grey.png' %}'); background-size: 38px; background-position:13%; margin-right:26px;  padding-right: 23px;" class="btn">Mes Annotations</button></a>
+              </div>
+              <div class="flex-item">
+                <a href={% url 'mon_compte' %}><button style="background-image: url('{% static 'img/contr-grey.png' %}');background-position:14%;  margin-left:0px; margin-right:0px; padding-right: 60px " class="btn">Mon Compte</button></a>
+                </div>
+                <div class="flex-item">
+                    <a href="{% url 'logout_contri' %}"><button style="background-image: url('{% static 'img/logout.png' %}');background-position:14%; margin-left:42px; margin-top: 30px"class="btn">Se Deconnecter</button></a>
+                    </div>
+                
+          </div>
+        </div>
+
+
+      <div class="content-side" style="position: relative">
+        <h1>Corpus à Annoter</h1>
+       
+        <h2 style="font-size: 22px; margin-top:27px">Annoter Corpus</h2>
+        <div class="recent-corpus-block">
+            <div class="entry">
+                <span class="titre">{{corpus.titre_corpus}}</span>
+          
+             </div>
+            <form action="{% url 'annoter_corpus' corpus.id %}" method="post">
+                {% csrf_token %}
+            
+            
+
+             
+             {%for tweet in tweets%}
+             <div class="entry">
+                     <select class="fields type" name ="avis">
+                        <option value=""></option>
+                         {% for cat in categories%}
+                         <option value="{{cat.id}}_{{tweet.id}}"{%for avis in tous_avis%}{%if avis.tweet.id == tweet.id%}{%if avis.avis == cat.id%} selected {% endif %} {% endif %} {%endfor%}>{{cat.nom_categorie}}</option>
+                         {%endfor%}
+                     </select>
+                 
+                 <span class="tweet-text">{{tweet.text}}</span>
+                 
+             
+            </div>
+             {%endfor%}
+           
+            
+        
+            <div class="entry last">
+                <button class="importer">{%if tous_avis %} Modifier {%else%} Envoyer {%endif%}</button>
+            </div>
+            
+            <div class="entry">
+                <br>
+            </form>
+            {%if tous_avis%}
+            <form action="{% url 'supprimer_annotation' corpus.id contributeur_login %}" method="post">
+                {% csrf_token %}
+            
+                <button class="importer delete">Retirer</button>
+            </form>
+            {%endif%}
+            </div>
+            </form>
+      
+          </div>
+          {%if cree%}
+          <div class="notif" style=" position: absolute; display: flex; align-items: center;top: 1.3vh; right: 40%; width: 25%; height: 5vw; background-color: white; border-radius: 8px;box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;z-index: 10;" >
+           
+              <img src="{% static 'img/checked.png' %}" style="width: 15%; padding-right: 10%; margin-left: 20px">
+              <span style="width:fit-content; font-size: 1.4vw; ">Corpus Annoté</span>
+          </div>
+           </div>
+           {%endif%}
+         
+     
+      </div>
+
+        </div>
+       
+      </div>
+
+    </div>
+ 
+     
+
+  </div>
+</body>
+
+
+<!--
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {%load static %}
+    
+    <title>Annoter Corpus</title>
+</head>
+<body>
+    <form action="{% url 'annoter_corpus' corpus.id %}" method="post">
+        {% csrf_token %}
+
+<h2>{{corpus.titre_corpus}}</h2>
+<table>
+    <tr>
+        <td style="border: 1px solid black">Avis</td>
+        <td style="border: 1px solid black">Tweet</td>
+        
+    </tr>
+    {%for tweet in tweets%}
+    <tr>
+        <td style="border: 1px solid black">
+            <select name ="avis">
+                {% for cat in categories%}
+                <option value="{{cat.id}}"{%for avis in tous_avis%}{%if avis.tweet.id == tweet.id%}{%if avis.avis == cat.id%} selected {% endif %} {% endif %} {%endfor%}>{{cat.nom_categorie}}</option>
+                {%endfor%}
+            </select>
+        </td>
+        <td style="border: 1px solid black">{{tweet.text}}</td>
+        
+    </tr>
+    {%endfor%}
+
+</table>
+<br>
+<button>{%if tous_avis %} Modifier {%else%} Envoyer {%endif%}</button>
+</form>
+{%if tous_avis%}
+<form action="{% url 'supprimer_annotation' corpus.id contributeur_login %}" method="post">
+    {% csrf_token %}
+
+    <button>Supprimer</button>
+</form>
+{%endif%}
+</body>
+</html>
+
+-->

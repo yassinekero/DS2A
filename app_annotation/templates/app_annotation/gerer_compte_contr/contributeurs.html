@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {%load static %}
+    <link rel="stylesheet" href="{% static 'resultat_tous_corpus.css' %}" type="text/css">
+    
+    <title>Modifier Contributeurs</title>
+</head>
+<body>
+  
+  <div class="global-wrapper">
+    <div class="menu-side">
+      <div class="flex-wrapper">
+          <div class="flex-item">
+            
+          <a  href="{% url 'admin_dashboard' %}"><button  style="background-image: url('{% static 'img/dashboard_grey.png' %}'); margin-top:100px; background-position:15%; margin-right:8px; " class="btn">Dashboard</button></a>
+          </div>
+          <div class="flex-item">
+            <a href={% url 'corpus' %}><button  style="margin-top: 30px; background-image: url('{% static 'img/document.png' %}');padding-right:100px; background-position:18%; margin-right:26px" class="btn">Corpus</button></a>
+            </div>
+            <div class="flex-item">
+              <a href="{% url 'type_annotation' %}"><button  style="background-image: url('{% static 'img/emotions.png' %}');background-position:14%; margin-top: 30px;margin-left:0px; margin-right:0px; padding-right: 40px" class="btn">Type Annotation</button></a>
+              </div>
+              <div class="flex-item">
+                <a href="{% url 'resultat' %}"><button   style="background-image: url('{% static 'img/notepad.png' %}');background-position:17%; margin-right:8px ;margin-top: 30px; "class="btn">Resultats</button></a>
+                </div>
+                <div class="flex-item">
+                  <a href="{% url 'chercher_tweets' %}"><button style="background-image: url('{% static 'img/twitter_grey.png' %}');background-position:17%; margin-right:19px "class="btn">Tweets</button></a>
+                  </div>
+                <div  class="flex-item">
+                  <a  href="{% url 'contributeurs' %}"><button id ="selected" style="  background-image: url('{% static 'img/profile_blue.png' %}');background-position:10%;margin-left:10px; margin-top:30px; padding-right: 45px; padding-left: 63px">Contributeurs</button></a>
+                  </div>
+                  <div class="flex-item">
+                    <a href="{% url 'logout_admin' %}"><button style="background-image: url('{% static 'img/logout.png' %}');background-position:14%; margin-left:42px; margin-top: 30px"class="btn">Se Deconnecter</button></a>
+                    </div>
+        </div>
+      </div>
+      <div class="content-side">
+        <h1>Contributeurs</h1>
+      
+        <div class="recent-corpus">
+          <h1 style="font-size: 26px">Tous les Contributeurs</h1>
+          <div class="recent-corpus-block">
+            <table>
+              <tr >
+                <td class="table-head" style="">Login</td>
+                <td class="table-head">Nom</td>
+                <td class="table-head">Prenom</td>
+                <td class="table-head">Bloqué</td>
+                <td class="table-head">Plus</td>
+              </tr>
+             
+              {% for contr in tous_contr %}
+          
+              <tr class="rows" style="text-align: center;">
+                <td class="info-rows" style="">{{contr.login.login}}</td>
+                <td class="info-rows">{{contr.nom}}</td>
+                <td class="info-rows">{{contr.prenom}} </td>
+                <td class="info-rows">{% if contr.bloque %}Oui {%else%}Non{%endif%}</td>
+                <td class="info-rows"><a style="color:#295DC0"  href="{% url 'gerer_contr' contr.login.login %}">Plus</a></td>
+              </tr>
+            
+              {%endfor%}            
+              
+            </table>
+            <br>
+          </div>
+        </div>
+        </div>
+        <div class="content-side2">
+        </div>
+      </div>
+
+    </div>
+ 
+     
+
+  </div>
+</body>

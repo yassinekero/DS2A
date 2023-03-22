@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {%load static %}
+    {% load mathfilters %}
+    {%load blog_tags%}
+    
+    <link rel="stylesheet" href="{% static 'resultat_corpus.css' %}" type="text/css">
+    
+    <title>Annotation Globale</title>
+</head>
+<body>
+  
+  <div class="global-wrapper">
+    <div class="menu-side">
+      <div class="flex-wrapper">
+          <div class="flex-item">
+            
+          <a  href="{% url 'admin_dashboard' %}"><button  style="background-image: url('{% static 'img/dashboard_grey.png' %}'); margin-top:100px; background-position:15%; margin-right:8px; " class="btn">Dashboard</button></a>
+          </div>
+          <div class="flex-item">
+            <a href={% url 'corpus' %}><button  style="margin-top: 30px; background-image: url('{% static 'img/document.png' %}');padding-right:100px; background-position:18%; margin-right:26px" class="btn">Corpus</button></a>
+            </div>
+            <div class="flex-item">
+              <a href="{% url 'type_annotation' %}"><button  style="background-image: url('{% static 'img/emotions.png' %}');background-position:14%; margin-top: 30px;margin-left:0px; margin-right:0px; padding-right: 40px" class="btn">Type Annotation</button></a>
+              </div>
+              <div class="flex-item">
+                <a href="{% url 'resultat' %}"><button id ="selected"  style="background-image: url('{% static 'img/notepad_blue.png' %}');background-position:17%; margin-right:8px ;margin-top: 30px;">Resultats</button></a>
+                </div>
+                <div class="flex-item">
+                  <a href="{% url 'chercher_tweets' %}"><button style="background-image: url('{% static 'img/twitter_grey.png' %}');background-position:17%; margin-right:19px "class="btn">Tweets</button></a>
+                  </div>
+                <div class="flex-item">
+                  <a href="{% url 'contributeurs' %}"><button style="background-image: url('{% static 'img/profile.png' %}');background-position:14%; margin-left:25px "class="btn">Contributeurs</button></a>
+                  </div>
+                  <div class="flex-item">
+                    <a href="{% url 'logout_admin' %}"><button style="background-image: url('{% static 'img/logout.png' %}');background-position:14%; margin-left:42px; margin-top: 30px"class="btn">Se Deconnecter</button></a>
+                    </div>
+        </div>
+      </div>
+      <div class="content-side">
+        <h1>Résultats</h1>
+     
+        <div class="recent-corpus">
+          <h1 style="font-size: 26px">Annotation Globale</h1>
+          <div style="padding-right:12px; padding-left: 12px" class="recent-corpus-block">
+            
+              <div class="titre">{{corpus.titre_corpus}}</div>
+        
+              <input type="text" id="myInput" style="background-image: url('{% static 'img/search.png' %}');" onkeyup="myFunction()" placeholder="Filtrer Par">
+              <select style="padding: 11px 15px 11px 15px; border: 1px solid #ddd"class="fields type filter_type" onchange="change_filter()">
+                <option>Etiquette</option>
+                <option>Type Resultat</option>
+              </select>
+              <div class="entry" style="font-size: 19px">Homogène: <span style="color: green">{{tw_homogene}}% </span>- Hétérogène: {{tw_heterogene}}% - Contradictoire: <span style="color: red">{{tw_contradiction}}%</span> - Non Annoté: {{tw_non_annote}}%</div>
+              <br>
+            <table style="padding-right:5px; padding-left: 5px" id="table_ag">
+              <tr class="t-head">
+                <th class="type_res"style="display: none"class="table-head">Type Resultat</th>
+                <th class="table-head">AG</th>
+                {%for cat in corpus.type_annotation.categorie_sentiment_set.all%}
+                <th class="table-head" style="padding-left: 10px; padding-right: 10px">{{cat.nom_categorie}}</th>
+                {%endfor%}
+                
+                <th class="table-head">Tweet</th>
+              </tr>
+              {% for tweet in corpus.tweet_set.all%}
+              <tr>
+                <td class="info-rows type_res" style="display: none" >{{tw_res_type|get_value_from_dict:tweet.id}}</td>
+                <td class="info-rows" {%if tw_res_type|get_value_from_dict:tweet.id == "Homogène"%} style="color: green" {% elif tw_res_type|get_value_from_dict:tweet.id == "Contradiction"%} style="color: red"{%endif%}style="padding-left: 5px; padding-right: 5px">{{tweet.annotation_general}}</td>
+             {% for cat in categories%}
+   
+              <td class="info-rows">{{list|get_value_from_dict:tweet.id|get_value_from_dict:cat.id}}</td>
+            
+              {%endfor%}
+           
+              <td class="info-rows tweet-row">{{tweet.text}}</td>
+              </tr>
+                 
+          {%endfor%}
+              </table>
+              <br>
+              
+              <br>
+           
+              <span style="margin-left: 15px"class="entry last">
+                <a class="importer"  href="{% url 'exporter_resultat' corpus.id%}">Exporter Resultats</a>
+             </span>
+          
+            <span style="margin-left: 10px" class="entry last">
+              <a class="importer"  href="{% url 'corpus_resultat_graph' corpus.id%}">Visualisation</a>
+           </span>
+          <span style="margin-left: 10px" class="entry last">
+            <a class="importer"  href="{% url 'annotation_globale_modifier' corpus.id %}">Modifier</a>
+         </span>
+          <br>
+          <br>
+          <br>
+                      </div>
+        </div>
+        <script>
+          let filter_select= document.querySelector(".filter_type")
+          let filter_type
+          function change_filter()
+          {
+             filter_type = filter_select.options[filter_select.selectedIndex].value;
+            if (filter_type == "Type Resultat")
+            {
+
+            }
+          }
+
+
+          function myFunction() {
+     
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("myInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("table_ag");
+            tr = table.getElementsByTagName("tr");
+          
+          
+            
+            for (i = 0; i < tr.length; i++) {
+              if (filter_type == "Type Resultat")
+              {
+                td = tr[i].getElementsByTagName("td")[0];
+              }
+              else
+              {
+                td = tr[i].getElementsByTagName("td")[1];
+              }
+              
+              if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                  tr[i].style.display = "";
+                } else {
+                  tr[i].style.display = "none";
+                }
+              }
+            }
+          }
+        </script>
+        <body>
+        </body>
+        </html>
