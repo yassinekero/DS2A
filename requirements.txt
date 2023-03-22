@@ -8,3 +8,4 @@ snscrape==0.6.1.20230314
 django-mathfilters==1.0.0
 psycopg2==2.9.5
 xlwt==1.3.0
+whitenoise==6.4.0
