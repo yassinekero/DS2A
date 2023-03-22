@@ -13,9 +13,9 @@ environ.Env.read_env()
 SECRET_KEY = 'django-insecure-js+v-f1(emja$tol%n!xf%!u@h^tmx5qqi$k&)-)ts3fyra$_!'
 
 
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
