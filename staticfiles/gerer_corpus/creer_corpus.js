@@ -10,7 +10,7 @@ function add()
     tweet.className = "entry"
     tweet.id = id
     tweet.innerHTML = `
-     <span>Le Tweet: </span>
+     <span>Tweet: </span>
     <input type="text" name="tweet" class="fields tweet_fields" required>
     <button id="${id}"class="minus_btn add_remove" type="button" onclick="remove(this.id)">-</button>`
      tweets.appendChild(tweet)
