@@ -138,10 +138,11 @@ def upload_corpus(request):
         corpus_file = request.FILES['file']
         masque = request.POST["masque"]
         type_annot_post = request.POST["type_annot"]
+        sheet = request.POST["sheet"]
         type_annot = Type_Annotation.objects.get(pk=(int)(type_annot_post))
         try: 
           workbook = load_workbook(filename=corpus_file.file)
-          Page = workbook['Sheet1']
+          Page = workbook[sheet]
           column = Page["A"]
         except:
           form_redir = UploadFileForm()
@@ -1098,10 +1099,11 @@ def upload_corpus_done(request):
         corpus_file = request.FILES['file']
         masque = request.POST["masque"]
         type_annot_post = request.POST["type_annot"]
+        sheet = request.POST["sheet"]
         type_annot = Type_Annotation.objects.get(pk=(int)(type_annot_post))
         try: 
           workbook = load_workbook(filename=corpus_file.file)
-          Page = workbook['Sheet1']
+          Page = workbook[sheet]
           column = Page["A"]
         except:
           form_redir = UploadFileForm()
@@ -1139,10 +1141,11 @@ def upload_corpus_error(request):
         corpus_file = request.FILES['file']
         masque = request.POST["masque"]
         type_annot_post = request.POST["type_annot"]
+        sheet = request.POST["sheet"]
         type_annot = Type_Annotation.objects.get(pk=(int)(type_annot_post))
         try: 
           workbook = load_workbook(filename=corpus_file.file)
-          Page = workbook['Sheet1']
+          Page = workbook[sheet]
           column = Page["A"]
         except:
           form_redir = UploadFileForm()
