@@ -51,11 +51,28 @@
             
               <div class="titre">{{corpus.titre_corpus}}</div>
         
-              <input type="text" id="myInput" style="background-image: url('{% static 'img/search.png' %}');" onkeyup="myFunction()" placeholder="Filtrer Par">
+              <span class="entry" style="font-size: 22px">Filtrer Par: </span>
+             
               <select style="padding: 11px 15px 11px 15px; border: 1px solid #ddd"class="fields type filter_type" onchange="change_filter()">
-                <option>Etiquette</option>
                 <option>Type Resultat</option>
+                <option>Etiquette</option>
+                
               </select>
+              <select style="padding: 11px 15px 11px 15px; "class="fields type type_res_value" onchange="myFunction()">
+                <option>Tous</option>
+                <option>Homogène</option>
+                <option>Hétérogène</option>
+                <option>Contradiction</option>
+                <option>Non Annoté</option>
+              </select>
+              <select style="padding: 11px 15px 11px 15px; display: none" class="fields type etiquette_value" onchange="myFunction()" name ="avis">
+                <option>Tous</option>
+                 {% for cat in categories%}
+                 <option>{{cat.nom_categorie}}</option>
+                 {%endfor%}
+                 <option>Indeterminé</option>
+             </select>
+             <br>
               <div class="entry" style="font-size: 19px">Homogène: <span style="color: green">{{tw_homogene}}% </span>- Hétérogène: {{tw_heterogene}}% - Contradictoire: <span style="color: red">{{tw_contradiction}}%</span> - Non Annoté: {{tw_non_annote}}%</div>
               <br>
            
@@ -119,23 +136,30 @@
         </div>
         <script>
           let filter_select= document.querySelector(".filter_type")
-          let filter_type
-          console.log("Hello")
+          let type_res_value= document.querySelector(".type_res_value")
+          let etiquette_value = document.querySelector(".etiquette_value")
+          let filter_type = filter_select.options[filter_select.selectedIndex].value;
           function change_filter()
           {
              filter_type = filter_select.options[filter_select.selectedIndex].value;
-            if (filter_type == "Type Resultat")
-            {
-
-            }
+             if (filter_type == "Type Resultat")
+             {
+              etiquette_value.style.display = "none"
+              type_res_value.style.display = "inline"
+             }
+             else if(filter_type == "Etiquette")
+             {
+              type_res_value.style.display = "none"
+              etiquette_value.style.display = "inline"
+             }
+          
           }
 
 
           function myFunction() {
      
             var input, filter, table, tr, td, i, txtValue;
-            input = document.getElementById("myInput");
-            filter = input.value.toUpperCase();
+           
             table = document.getElementById("table_ag");
             tr = table.getElementsByTagName("tr");
           
@@ -144,12 +168,25 @@
             for (i = 0; i < tr.length; i++) {
               if (filter_type == "Type Resultat")
               {
+                let type_res_value= document.querySelector(".type_res_value")
+                filter = type_res_value.options[type_res_value.selectedIndex].value.toUpperCase(); 
+                if (filter == "TOUS")
+                {
+                  filter = "";
+                }
                 td = tr[i].getElementsByTagName("td")[0];
               }
-              else
+              else if(filter_type == "Etiquette")
               {
+                let etiquette_value = document.querySelector(".etiquette_value")
+                filter = etiquette_value.options[etiquette_value.selectedIndex].value.toUpperCase(); 
+                if (filter == "TOUS")
+                {
+                  filter = "";
+                }
                 td = tr[i].getElementsByTagName("td")[1];
-              }              
+              }
+              
               if (td) {
                 txtValue = td.textContent || td.innerText;
                 if (txtValue.toUpperCase().indexOf(filter) > -1) {
