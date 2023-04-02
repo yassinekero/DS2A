@@ -56,7 +56,7 @@
             <div class="right-side">
               <div class="text">
                 <div class="text2">Description: </div>
-                <div class="text1"><span style="color: #295DC0">&#9679;</span> Anonoter les Tweets par les Etiquettes: <br>{%for cat in corpus.type_annotation.categorie_sentiment_set.all%}&#9675; {{cat.nom_categorie}} {%endfor%}</div>
+                <div class="text1"><span style="color: #295DC0">&#9679;</span> Annoter les Tweets par les Etiquettes: <br>{%for cat in corpus.type_annotation.categorie_sentiment_set.all%}&#9675; {{cat.nom_categorie}} {%endfor%}</div>
                 
                 </div>
                 <div class="progres"><span style="color: #295DC0">{{list|index:ind}}/ {{corpus.tweet_set.all|length}}</span> Tweets Annotés</div>
