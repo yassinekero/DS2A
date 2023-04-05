@@ -85,36 +85,3 @@
   </div>
 </body>
 </html>
-<!--
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {%load static %}
-    <link rel="stylesheet" href="{% static 'dashboard_admin.css' %}" type="text/css">
-    
-    <title>Contributeur Dashboard</title>
-</head>
-<body>
-  
-<h1>Contributeur</h1>
-
-<div>Login : {{compte.login}}</div>
-<div>Nom: {{compte.nom}}</div>
-<div>Prenom: {{compte.prenom}}</div>
-<br>
-<span>Afficher les Corpus Disponnibles</span>
-<a href="{% url 'afficher_corpus_contr' %}"><button>Ouvrir</button></a>
- <br>
-<form action="{% url 'logout_contri' %}" method="post">
-{% csrf_token %}
-<button>Se Déconnecter</button>
-</form>
-
-</body>
-</html>
-
--->
